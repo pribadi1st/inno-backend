@@ -32,19 +32,22 @@ class AuthController extends Controller
         $token = Auth::attempt($credentials);
         if (!$token) {
             return response()->json([
-                'status' => 'error',
+                'status' => '404',
                 'message' => 'Wrong email or password',
-            ], 401);
+            ], 404);
         }
 
         $user = Auth::user();
         return response()->json([
-                'status' => 'success',
-                'user' => $user,
-                'authorisation' => [
-                    'token' => $token,
-                    'type' => 'bearer',
-                ]
+                'status' => '200',
+                'data' => [
+                    'user' => $user,
+                    'authorisation' => [
+                        'token' => $token,
+                        'type' => 'bearer',
+                    ]
+                ],
+                'message' => "success"
             ]);
 
     }
