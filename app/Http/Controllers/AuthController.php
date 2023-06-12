@@ -23,7 +23,7 @@ class AuthController extends Controller
         ]);
         if($validator->fails()) {
             return response()->json([
-                'status' => '403',
+                'status' => 403,
                 'message' => $validator->errors()
             ]);
         }
@@ -32,14 +32,14 @@ class AuthController extends Controller
         $token = Auth::attempt($credentials);
         if (!$token) {
             return response()->json([
-                'status' => '404',
+                'status' => 404,
                 'message' => 'Wrong email or password',
             ], 404);
         }
 
         $user = Auth::user();
         return response()->json([
-                'status' => '200',
+                'status' => 200,
                 'data' => [
                     'user' => $user,
                     'authorisation' => [
@@ -60,7 +60,7 @@ class AuthController extends Controller
         ]);
         if($validator->fails()) {
             return response()->json([
-                'status' => '403',
+                'status' => 403,
                 'message' => $validator->errors()
             ]);
         }
@@ -73,7 +73,7 @@ class AuthController extends Controller
 
         $token = Auth::login($user);
         return response()->json([
-            'status' => '200',
+            'status' => 200,
             'message' => 'User created successfully',
             'user' => $user,
             'authorisation' => [
@@ -87,7 +87,7 @@ class AuthController extends Controller
     {
         Auth::logout();
         return response()->json([
-            'status' => 'success',
+            'status' => 200,
             'message' => 'Successfully logged out',
         ]);
     }
@@ -95,7 +95,7 @@ class AuthController extends Controller
     public function refresh()
     {
         return response()->json([
-            'status' => 'success',
+            'status' => 200,
             'user' => Auth::user(),
             'authorisation' => [
                 'token' => Auth::refresh(),
